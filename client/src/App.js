@@ -1,10 +1,18 @@
-import React from "react";
+import React, { Fragment } from "react";
+import { Routes, Route } from 'react-router-dom'
+
+/* components */
+import Login from "./components/Login";
 
 function App() {
     return (
-        <div>
+        <Fragment>
+            <Routes>
+                <Route path="/login" element={<Login />} />
+            </Routes>
+        </Fragment>
 
-        </div>
+
     );
 }
 
