@@ -1,6 +1,8 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUser } from '../Reducer/userSlice';
 
 /* assets */
 import { LoginBox, LoginWrap, LoginInput, LoginButton } from '../assets/LoginStyle.js';
@@ -8,6 +10,16 @@ import { LoginBox, LoginWrap, LoginInput, LoginButton } from '../assets/LoginSty
 function Login() {
 
     let navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const user = useSelector((state) => state.user);
+
+    useEffect(() => {
+        if (user.id) {
+            navigate("/");
+        }
+    }, [user])
+
 
     const [Id, setId] = useState("");
     const [Pw, setPw] = useState("");
@@ -25,10 +37,12 @@ function Login() {
     const login = (e) => {
         e.preventDefault();
 
+        /*
         if (!Id || !Pw) {
             setErrMsg("모든 빈칸을 채워주세요.")
             return;
         }
+        */
 
         let body = {
             userid: Id,
@@ -38,12 +52,21 @@ function Login() {
         axios.post("/api/user/login", body).then((res) => {
 
             if (res.data.success) {
-                navigate("/")
-            } else {
-                setErrMsg(res.data.msg);
-                return;
+
+                try {
+
+                    localStorage.setItem('user', JSON.stringify(res.data.user));
+                    dispatch(loginUser(res.data.user))
+                    navigate("/");
+
+                } catch (e) {
+                    console.log('localStorage is not working!');
+                }
+
             }
 
+        }).catch((err) => {
+            setErrMsg(err.response.data.msg);
         })
 
     }

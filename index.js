@@ -1,8 +1,9 @@
 const express = require("express");
 const mongoose = require("mongoose");
-
 const helmet = require("helmet");
 const hpp = require("hpp");
+
+var cookieParser = require("cookie-parser");
 
 /* config */
 require("dotenv").config();
@@ -15,9 +16,11 @@ app.use(helmet());
 app.use(hpp());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
+app.use(cookieParser());
 
 /* Router */
 app.use("/api/user", require("./server/Router/user.js"));
+
 
 mongoose.connect(MONGO_URI).then(() => {
     console.log("MongoDB connection Success!");
