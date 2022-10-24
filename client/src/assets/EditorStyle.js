@@ -35,4 +35,45 @@ const CategoryInput = styled.select`
     padding: 0.5rem;
 `;
 
-export { QuillWrapper, TitleInput, CategoryInput };
+const ButtonWrap = styled.div`
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+`;
+
+const SubmitButton = styled.button`
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    color: white;
+    outline: none;
+    cursor: pointer;
+    background: #22293c;
+
+    @media (max-width: 768px) {
+        padding: 0.375rem 1rem;
+        font-size: 0.75rem;
+    }
+`;
+
+const CancelButton = styled.button`
+    border: 0.1px solid #000000;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    color: #000000;
+    outline: none;
+    cursor: pointer;
+    background: #ffffff;
+
+    @media (max-width: 768px) {
+        padding: 0.375rem 1rem;
+        font-size: 0.75rem;
+    }
+`;
+
+export { QuillWrapper, TitleInput, CategoryInput, ButtonWrap, SubmitButton, CancelButton };

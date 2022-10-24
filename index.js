@@ -20,6 +20,8 @@ app.use(cookieParser());
 
 /* Router */
 app.use("/api/user", require("./server/Router/user.js"));
+app.use("/api/category", require("./server/Router/category.js"));
+app.use("/api/post", require("./server/Router/post.js"));
 
 
 mongoose.connect(MONGO_URI).then(() => {

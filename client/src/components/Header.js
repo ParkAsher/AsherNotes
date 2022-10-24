@@ -34,7 +34,7 @@ function Header() {
     return (
         <HeaderContainer>
             <HeaderWrap>
-                <Link className='logo'>Asher Notes</Link>
+                <Link className='logo' to="/">Asher Notes</Link>
                 {user._id ? (
                     <div className='right'>
                         <HeaderUserInfo>{user.name}</HeaderUserInfo>
