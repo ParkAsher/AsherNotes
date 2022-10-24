@@ -1,8 +1,16 @@
 import React from 'react'
 
+/* component */
+import Editor from './Editor';
+
+/* assets */
+import { WriteWrap } from '../assets/WriteStyle';
+
 function Write() {
     return (
-        <div>write</div>
+        <WriteWrap>
+            <Editor />
+        </WriteWrap>
     )
 }
 
