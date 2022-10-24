@@ -91,12 +91,12 @@ router.post("/login", (req, res) => {
                     name: findUser.name,
                 },
                 process.env.JWT_SECRET,
-                { expiresIn: '2m' }
+                { expiresIn: '1d' }
 
             );
 
             res.cookie('access_token', token, {
-                maxAge: 1000 * 60 * 2,
+                maxAge: 1000 * 60 * 60 * 24,
                 httpOnly: true,
             })
 

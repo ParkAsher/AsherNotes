@@ -6,6 +6,7 @@ import axios from 'axios';
 import MainPage from "./components/MainPage";
 import Login from "./components/Login";
 import Header from "./components/Header";
+import Write from "./components/Write";
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<MainPage />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/write" element={<Write />} />
             </Routes>
         </Fragment>
     );

@@ -58,6 +58,10 @@ const HeaderButton = styled.button`
 const HeaderUserInfo = styled.div`
     font-weight: 800;
     margin-right: 1rem;
+
+    @media (max-width: 768px) {
+        display: none;
+    }
 `;
 
 export { HeaderWrap, HeaderContainer, HeaderButton, HeaderUserInfo };
