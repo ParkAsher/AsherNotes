@@ -6,6 +6,14 @@ const { Counter } = require("../Model/Counter.js");
 const { Post } = require("../Model/Post.js");
 const { User } = require("../Model/User.js");
 
+const setUpload = require("../Util/upload.js");
+
+router.post("/image", setUpload("ashernotes/image"), (req, res, next) => {
+
+    res.status(200).json({ success: true, filePath: res.req.file.location })
+
+})
+
 router.post("/submit", (req, res) => {
 
     let temp = {

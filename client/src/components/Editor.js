@@ -1,14 +1,17 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import Quill from 'quill';
-import 'quill/dist/quill.snow.css';
+import ReactQuill, { Quill } from 'react-quill';
+import "react-quill/dist/quill.snow.css";
 import hljs from 'highlight.js';
 import 'highlight.js/styles/github-dark.css';
 
 /* assets */
 import { ButtonWrap, CancelButton, CategoryInput, QuillWrapper, SubmitButton, TitleInput } from '../assets/EditorStyle.js';
+
+import ImageResize from 'quill-image-resize';
+Quill.register('modules/ImageResize', ImageResize);
 
 hljs.configure({
     languages: ['javascript', 'ruby', 'python', 'rust'],
@@ -17,15 +20,14 @@ hljs.configure({
 function Editor() {
 
     const [Title, setTitle] = useState("");
-    const [Category, setCategory] = useState("");
+    const [Category, setCategory] = useState("일상");
     const [CategoryList, setCategoryList] = useState([]);
     const [Content, setContent] = useState("");
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const quillElement = useRef(null);
-    const quillInstance = useRef(null);
+    const quillRef = useRef();
 
     const user = useSelector((state) => state.user);
 
@@ -55,39 +57,58 @@ function Editor() {
         getCategoryList();
     }, [])
 
-    useEffect(() => {
+    // imageHandler
+    const imageHandler = () => {
 
-        quillInstance.current = new Quill(quillElement.current, {
-            theme: 'snow',
-            placeholder: '내용을 작성하세요..',
-            modules: {
-                syntax: {
-                    highlight: text => hljs.highlightAuto(text).value,
-                },
-                toolbar: {
+        const input = document.createElement("input");
 
-                    container: [
-                        [{ 'header': [false, 1, 2, 3, 4, 5] }],
-                        ['bold', 'italic', 'underline', 'blockquote', 'code-block'],
-                        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-                        [{ 'color': [] }, { 'background': [] }],
-                        [{ 'align': [] }],
-                        ['image'],
-                    ],
+        input.setAttribute("type", 'file');
+        input.setAttribute("accept", "image/*");
+        input.click();
 
-                },
+        input.addEventListener('change', async () => {
+            const file = input.files[0];
 
+            var formData = new FormData();
+            formData.append("file", file);
+
+            axios.post("/api/post/image", formData).then((res) => {
+
+                console.log(res.data.filePath);
+
+                const editor = quillRef.current.getEditor();
+                const range = editor.getSelection();
+
+                editor.insertEmbed(range.index, 'image', res.data.filePath);
+
+            }).catch((err) => {
+                console.log(err);
+            })
+        })
+    }
+
+    const modules = useMemo(() => ({
+        syntax: {
+            highlight: text => hljs.highlightAuto(text).value,
+        },
+        toolbar: {
+
+            container: [
+                [{ 'header': [false, 1, 2, 3, 4, 5] }],
+                ['bold', 'italic', 'underline', 'blockquote', 'code-block'],
+                [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                [{ 'color': [] }, { 'background': [] }],
+                [{ 'align': [] }],
+                ['image'],
+            ],
+            handlers: {
+                image: imageHandler,
             },
-        });
-
-        const quill = quillInstance.current;
-        quill.on('text-change', (delta, oldDelta, source) => {
-            if (source === 'user') {
-                setContent(quill.root.innerHTML);
-            }
-        });
-
-    }, [])
+        },
+        ImageResize: {
+            parchment: Quill.import('parchment')
+        }
+    }), [])
 
     const onChangeTitle = (e) => {
         setTitle(e.target.value);
@@ -96,11 +117,6 @@ function Editor() {
     const onChangeCategory = (e) => {
         setCategory(e.target.value);
     }
-
-    useEffect(() => {
-        console.log(Category);
-    }, [Category])
-
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -119,6 +135,7 @@ function Editor() {
         axios.post("/api/post/submit", body).then((res) => {
             if (res.data.success) {
                 alert("글 작성 완료.");
+                window.location.href = "/";
             } else {
                 alert("글 작성 실패.");
             }
@@ -139,11 +156,11 @@ function Editor() {
                 })}
             </CategoryInput>
             <QuillWrapper>
-                <div ref={quillElement}></div>
+                <ReactQuill ref={quillRef} modules={modules} theme="snow" value={Content} onChange={setContent}></ReactQuill>
             </QuillWrapper>
             <ButtonWrap>
                 <SubmitButton onClick={(e) => onSubmit(e)}>작성</SubmitButton>
-                <CancelButton>취소</CancelButton>
+                <CancelButton onClick={() => window.location.href = "/"}>취소</CancelButton>
             </ButtonWrap>
         </>
     )

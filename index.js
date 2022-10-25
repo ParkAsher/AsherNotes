@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const helmet = require("helmet");
 const hpp = require("hpp");
+const path = require("path");
 
 var cookieParser = require("cookie-parser");
 
@@ -17,6 +18,8 @@ app.use(hpp());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser());
+
+app.use(express.static(path.join(__dirname, "./client/build")));
 
 /* Router */
 app.use("/api/user", require("./server/Router/user.js"));
