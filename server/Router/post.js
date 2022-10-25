@@ -46,5 +46,20 @@ router.post("/submit", (req, res) => {
 
 })
 
+router.post("/list", (req, res) => {
+
+    Post.find({}).populate("author").exec().then().then((doc) => {
+
+        res.status(200).json({ success: true, postList: doc })
+
+    }).catch((err) => {
+
+        res.status(400).json({ success: false })
+        console.log(err);
+
+    })
+
+})
+
 
 module.exports = router;
