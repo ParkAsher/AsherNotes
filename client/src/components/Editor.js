@@ -24,6 +24,8 @@ function Editor() {
     const [CategoryList, setCategoryList] = useState([]);
     const [Content, setContent] = useState("");
 
+    const [Thumbnail, setThumbnail] = useState("");
+
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -75,6 +77,8 @@ function Editor() {
             axios.post("/api/post/image", formData).then((res) => {
 
                 console.log(res.data.filePath);
+
+                setThumbnail(res.data.filePath);
 
                 const editor = quillRef.current.getEditor();
                 const range = editor.getSelection();
@@ -130,6 +134,7 @@ function Editor() {
             category: Category,
             content: Content,
             userid: user.userid,
+            thumbnail: Thumbnail
         }
 
         axios.post("/api/post/submit", body).then((res) => {

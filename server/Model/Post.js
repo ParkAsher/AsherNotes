@@ -19,6 +19,9 @@ const postSchema = new mongoose.Schema({
     category: {
         type: String,
         required: true,
+    },
+    thumbnail: {
+        type: String,
     }
 }, { collection: "post", timestamps: true });
 

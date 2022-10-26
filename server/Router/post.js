@@ -20,6 +20,7 @@ router.post("/submit", (req, res) => {
         title: req.body.title,
         category: req.body.category,
         content: req.body.content,
+        thumbnail: req.body.thumbnail
     }
 
     Counter.find({ name: "counter" }).exec().then((counter) => {
@@ -48,7 +49,7 @@ router.post("/submit", (req, res) => {
 
 router.post("/list", (req, res) => {
 
-    Post.find({}).populate("author").exec().then().then((doc) => {
+    Post.find({}).populate("author").sort({ createdAt: -1 }).skip(req.body.skip).limit(6).exec().then().then((doc) => {
 
         res.status(200).json({ success: true, postList: doc })
 

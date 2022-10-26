@@ -17,4 +17,22 @@ const PostListWrap = styled.div`
     margin-top: 3rem;
 `;
 
-export { MainPageWrap, PostListWrap }
+const LoadMore = styled.div`
+    width: 100%;
+
+    button {
+        width: 100%;
+        padding: 0.75rem ;
+        outline : none;
+        border: 1px solid lightcoral;
+        background: transparent;
+        cursor: pointer;
+
+        font-size: 0.75rem;
+        font-weight: bold;
+
+        margin-bottom: 1rem;
+    }
+`;
+
+export { MainPageWrap, PostListWrap, LoadMore }

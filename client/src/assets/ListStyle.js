@@ -54,10 +54,18 @@ const ListItem = styled.div`
 
 const Thumbnail = styled.div`
     width: 100%;
-    height: 15rem;
+    height: 20rem;
     border-radius: 4px;
     box-shadow: rgb(60 64 67 / 30%) 0px 1px 2px 0px, rgb(60 64 67 / 15%) 0px 2px 6px 2px;
     margin-bottom: 10px;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    
 `;
 
 export { ListWrap, ListItem, Thumbnail };

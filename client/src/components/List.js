@@ -15,7 +15,9 @@ function List(props) {
             {props.PostList.map((post, idx) => {
                 return (
                     <ListItem key={idx}>
-                        <Thumbnail></Thumbnail>
+                        <Thumbnail>
+                            <img src={post.thumbnail} alt="thumbnail"></img>
+                        </Thumbnail>
                         <p className='title'>{post.title}</p>
                         <span className='name'>{post.author.name}</span>
                         <span className='category'>{post.category}</span>
