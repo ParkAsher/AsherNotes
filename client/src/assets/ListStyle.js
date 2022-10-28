@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 const ListWrap = styled.div`
     display: flex;
@@ -13,6 +13,8 @@ const ListWrap = styled.div`
 const ListItem = styled.div`
     width: 47%;
     margin-bottom: 2rem;
+    background-color: #ffffff;
+    border-radius: 5px;
 
     p {
         margin: 0;
@@ -29,18 +31,26 @@ const ListItem = styled.div`
     }
 
     .title {
+        padding-top: 1rem;
+        padding-bottom: 0.75rem;
+        padding-left: 0.75rem;
         font-size: 1.5rem;
         font-weight: bold;
-        margin-bottom: 5px;
     }
-    .name {
-        color: lightblue;
-    }
-    .date {
-        color: lightslategray;
-    }
-    .category {
-        color: darkgreen;
+
+    .subtitle {
+        padding-bottom: 0.75rem;
+        padding-left: 0.75rem;
+
+        .name {
+            color: lightblue;
+        }
+        .date {
+            color: lightslategray;
+        }
+        .category {
+            color: darkgreen;
+        }
     }
 
     @media (max-width: 768px) {
@@ -55,17 +65,14 @@ const ListItem = styled.div`
 const Thumbnail = styled.div`
     width: 100%;
     height: 20rem;
-    border-radius: 4px;
-    box-shadow: rgb(60 64 67 / 30%) 0px 1px 2px 0px, rgb(60 64 67 / 15%) 0px 2px 6px 2px;
-    margin-bottom: 10px;
+    border-radius: 5px 5px 0 0;
 
     img {
         width: 100%;
         height: 100%;
         object-fit: cover;
-    }
-
-    
+        border-radius: 5px 5px 0 0;
+    }    
 `;
 
 export { ListWrap, ListItem, Thumbnail };

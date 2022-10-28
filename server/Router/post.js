@@ -49,16 +49,33 @@ router.post("/submit", (req, res) => {
 
 router.post("/list", (req, res) => {
 
-    Post.find({}).populate("author").sort({ createdAt: -1 }).skip(req.body.skip).limit(6).exec().then().then((doc) => {
+    if (!req.body.category) {
 
-        res.status(200).json({ success: true, postList: doc })
+        Post.find({}).populate("author").sort({ createdAt: -1 }).skip(req.body.skip).limit(6).exec().then().then((doc) => {
 
-    }).catch((err) => {
+            res.status(200).json({ success: true, postList: doc })
 
-        res.status(400).json({ success: false })
-        console.log(err);
+        }).catch((err) => {
 
-    })
+            res.status(400).json({ success: false })
+            console.log(err);
+
+        })
+
+    } else {
+
+        Post.find({ category: req.body.category }).populate("author").sort({ createdAt: -1 }).skip(req.body.skip).limit(6).exec().then().then((doc) => {
+
+            res.status(200).json({ success: true, postList: doc })
+
+        }).catch((err) => {
+
+            res.status(400).json({ success: false })
+            console.log(err);
+
+        })
+
+    }
 
 })
 

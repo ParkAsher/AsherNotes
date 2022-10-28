@@ -4,6 +4,7 @@ import React from 'react'
 /* assets */
 import { Thumbnail, ListItem, ListWrap } from '../assets/ListStyle';
 
+
 function List(props) {
 
     const setDate = (date) => {
@@ -19,9 +20,11 @@ function List(props) {
                             <img src={post.thumbnail} alt="thumbnail"></img>
                         </Thumbnail>
                         <p className='title'>{post.title}</p>
-                        <span className='name'>{post.author.name}</span>
-                        <span className='category'>{post.category}</span>
-                        <span className='date'>{setDate(post.createdAt)}</span>
+                        <div className='subtitle'>
+                            <span className='name'>{post.author.name}</span>
+                            <span className='category'>{post.category}</span>
+                            <span className='date'>{setDate(post.createdAt)}</span>
+                        </div>
                     </ListItem>
                 );
             })}

@@ -165,7 +165,7 @@ function Editor() {
             </QuillWrapper>
             <ButtonWrap>
                 <SubmitButton onClick={(e) => onSubmit(e)}>작성</SubmitButton>
-                <CancelButton onClick={() => window.location.href = "/"}>취소</CancelButton>
+                <CancelButton onClick={() => { localStorage.setItem('category', ""); window.location.href = "/"; }}>취소</CancelButton>
             </ButtonWrap>
         </>
     )

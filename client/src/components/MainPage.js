@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import axios from 'axios'
 
 /* component */
 import List from './List.js';
 
 /* assets */
-import { LoadMore, MainPageWrap, PostListWrap } from '../assets/MainPageStyle.js';
+import { CategoryWrap, LoadMore, MainPageWrap, PostListWrap } from '../assets/MainPageStyle.js';
 
 function MainPage() {
 
@@ -15,11 +16,16 @@ function MainPage() {
 
     const [IsLoadMore, setIsLoadMore] = useState(true);
 
+    const [Category, setCategory] = useState(localStorage.getItem('category'));
+
+    const [BtnActive, setBtnActive] = useState(localStorage.getItem('category'));
+
     // 첫 더불러오기
     const getPostListMore = () => {
 
         let body = {
             skip: Skip,
+            category: Category,
         }
 
         axios.post("/api/post/list", body).then((res) => {
@@ -47,7 +53,8 @@ function MainPage() {
         setSkip(0);
 
         let body = {
-            skip: 0
+            skip: 0,
+            category: Category,
         }
 
         axios.post("/api/post/list", body).then((res) => {
@@ -69,11 +76,24 @@ function MainPage() {
     }
 
     useEffect(() => {
+        localStorage.setItem('category', "");
         getPostList();
-    }, [])
+    }, [Category])
 
     return (
         <MainPageWrap>
+            <CategoryWrap>
+                <div className='category-btn-wrap'>
+                    <button value="" onClick={() => { setCategory(""); setBtnActive(""); localStorage.setItem('category', "") }} className={("" === BtnActive ? "active" : "")} >전체</button>
+                    <button value="개발" onClick={() => { setCategory("개발"); setBtnActive("개발"); localStorage.setItem('category', "개발"); }} className={("개발" === BtnActive ? "active" : "")}>개발</button>
+                    <button value="일상" onClick={() => { setCategory("일상"); setBtnActive("일상"); localStorage.setItem('category', "일상") }} className={("일상" === BtnActive ? "active" : "")}>일상</button>
+                </div>
+                <div className='write-btn-wrap'>
+                    <Link to="/write">
+                        <button>글쓰기</button>
+                    </Link>
+                </div>
+            </CategoryWrap>
             <PostListWrap>
                 <List PostList={PostList}></List>
             </PostListWrap>

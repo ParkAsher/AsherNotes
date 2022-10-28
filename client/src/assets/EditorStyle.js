@@ -39,7 +39,7 @@ const ButtonWrap = styled.div`
     display: flex;
     justify-content: flex-end;
     gap: 0.5rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
 `;
 
 const SubmitButton = styled.button`
