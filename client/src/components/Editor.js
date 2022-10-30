@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import ReactQuill, { Quill } from 'react-quill';
 import "react-quill/dist/quill.snow.css";
 import hljs from 'highlight.js';
@@ -27,7 +27,6 @@ function Editor() {
     const [Thumbnail, setThumbnail] = useState("");
 
     const navigate = useNavigate();
-    const dispatch = useDispatch();
 
     const quillRef = useRef();
 

@@ -23,7 +23,7 @@ router.post("/submit", (req, res) => {
         thumbnail: req.body.thumbnail
     }
 
-    Counter.find({ name: "counter" }).exec().then((counter) => {
+    Counter.findOne({ name: "counter" }).exec().then((counter) => {
         temp.postNum = counter.postNum;
 
         User.findOne({ userid: req.body.userid }).exec().then((userInfo) => {
@@ -76,6 +76,39 @@ router.post("/list", (req, res) => {
         })
 
     }
+
+})
+
+router.post("/detail", (req, res) => {
+
+    Post.findOne({ postNum: Number(req.body.postNum) }).exec().then((doc) => {
+
+        const user_id = doc.author;
+
+        User.findOne({ _id: user_id }).exec().then((user) => {
+
+            res.status(200).json({ success: true, postInfo: doc, authorInfo: user });
+        })
+
+    }).catch((err) => {
+
+        res.status(400).json({ success: false });
+
+    })
+
+})
+
+router.post("/delete", (req, res) => {
+
+    Post.deleteOne({ postNum: Number(req.body.postNum) }).exec().then(() => {
+
+        res.status(200).json({ success: true });
+
+    }).catch((err) => {
+
+        res.status(400).json({ success: false });
+
+    })
 
 })
 

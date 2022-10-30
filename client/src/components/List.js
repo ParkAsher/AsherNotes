@@ -1,5 +1,6 @@
 import moment from 'moment/moment';
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 
 /* assets */
 import { Thumbnail, ListItem, ListWrap } from '../assets/ListStyle';
@@ -16,15 +17,17 @@ function List(props) {
             {props.PostList.map((post, idx) => {
                 return (
                     <ListItem key={idx}>
-                        <Thumbnail>
-                            <img src={post.thumbnail} alt="thumbnail"></img>
-                        </Thumbnail>
-                        <p className='title'>{post.title}</p>
-                        <div className='subtitle'>
-                            <span className='name'>{post.author.name}</span>
-                            <span className='category'>{post.category}</span>
-                            <span className='date'>{setDate(post.createdAt)}</span>
-                        </div>
+                        <Link to={`/post/${post.postNum}`}>
+                            <Thumbnail>
+                                <img src={post.thumbnail === "" ? "https://via.placeholder.com/500x300?text=No+Thumnail" : post.thumbnail} alt=""></img>
+                            </Thumbnail>
+                            <p className='title'>{post.title}</p>
+                            <div className='subtitle'>
+                                <span className='name'>{post.author.name}</span>
+                                <span className='category'>{post.category}</span>
+                                <span className='date'>{setDate(post.createdAt)}</span>
+                            </div>
+                        </Link>
                     </ListItem>
                 );
             })}

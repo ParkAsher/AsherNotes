@@ -50,7 +50,7 @@ const HeaderButton = styled.button`
     background: #ffffff;
 
     @media (max-width: 768px) {
-        padding: 0.375rem 1rem;
+        padding: 0.5rem 0.75rem;
         font-size: 0.75rem;
     }
 `;

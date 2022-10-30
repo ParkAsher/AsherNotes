@@ -1,4 +1,4 @@
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 
 const ListWrap = styled.div`
     display: flex;
@@ -15,6 +15,7 @@ const ListItem = styled.div`
     margin-bottom: 2rem;
     background-color: #ffffff;
     border-radius: 5px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 
     p {
         margin: 0;
@@ -31,16 +32,17 @@ const ListItem = styled.div`
     }
 
     .title {
-        padding-top: 1rem;
-        padding-bottom: 0.75rem;
-        padding-left: 0.75rem;
+        padding: 1rem 0.75rem 0.5rem 0.75rem;
         font-size: 1.5rem;
         font-weight: bold;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        word-break: break-all;
     }
 
     .subtitle {
-        padding-bottom: 0.75rem;
-        padding-left: 0.75rem;
+        padding: 0.5rem 0.75rem ;
 
         .name {
             color: lightblue;
@@ -64,7 +66,7 @@ const ListItem = styled.div`
 
 const Thumbnail = styled.div`
     width: 100%;
-    height: 20rem;
+    height: 17.5rem;
     border-radius: 5px 5px 0 0;
 
     img {
@@ -72,7 +74,11 @@ const Thumbnail = styled.div`
         height: 100%;
         object-fit: cover;
         border-radius: 5px 5px 0 0;
-    }    
+    }   
+    
+    @media (max-width: 768px) {
+        height: 12.5rem;
+    }
 `;
 
 export { ListWrap, ListItem, Thumbnail };
