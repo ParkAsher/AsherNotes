@@ -1,7 +1,7 @@
 body {
     margin: 0;
     padding: 0;
-    font-family: "Nanum Gothic", sans-serif;
+    font-family: "Noto Sans KR", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     box-sizing: border-box;
@@ -29,10 +29,5 @@ a {
 
 * {
     box-sizing: inherit;
-    font-family: "Nanum Gothic", sans-serif;
-}
-
-code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-        monospace;
+    font-family: "Noto Sans KR", sans-serif;
 }

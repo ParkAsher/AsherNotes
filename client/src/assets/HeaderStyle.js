@@ -9,20 +9,10 @@ const HeaderWrap = styled.div`
     width: 1024px;
     margin: 0 auto;
     height: 5rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
 
     display: flex;
     align-items: center;
     justify-content: space-between;
-
-    @media (max-width: 1024px) {
-        width: 768px;
-    }
-
-    @media (max-width: 768px) {
-        width: 100%;
-    }
 
     .logo {
 
@@ -35,7 +25,22 @@ const HeaderWrap = styled.div`
     .right {
         display: flex;
         align-items: center;        
-    }    
+    }   
+    
+    @media (max-width: 1024px) {
+        width: 768px;
+    }
+
+    @media (max-width: 768px) {
+        width: 100%;
+        padding-left: 1rem;
+        padding-right: 1rem;
+
+        .logo {
+            font-size: 1.25rem;
+        }
+        
+    }
 `;
 
 const HeaderButton = styled.button`
