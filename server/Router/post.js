@@ -14,6 +14,12 @@ router.post("/image", setUpload("ashernotes/image"), (req, res, next) => {
 
 })
 
+router.post("/thumbnail", setUpload("ashernotes/thumbnail"), (req, res, next) => {
+
+    res.status(200).json({ success: true, filePath: res.req.file.location })
+
+})
+
 router.post("/submit", (req, res) => {
 
     let temp = {
@@ -112,5 +118,24 @@ router.post("/delete", (req, res) => {
 
 })
 
+router.post("/edit", (req, res) => {
+
+    let temp = {
+        title: req.body.title,
+        category: req.body.category,
+        content: req.body.content,
+        thumbnail: req.body.thumbnail,
+    }
+
+    Post.updateOne({ postNum: Number(req.body.postNum) }, { $set: temp }).exec().then(() => {
+
+        res.status(200).json({ success: true });
+
+    }).catch((err) => {
+
+        res.status(400).json({ success: false });
+
+    })
+})
 
 module.exports = router;

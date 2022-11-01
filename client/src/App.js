@@ -8,6 +8,7 @@ import Login from "./components/Login";
 import Header from "./components/Header";
 import Write from "./components/Write";
 import PostArea from "./components/PostArea";
+import Edit from "./components/Edit";
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/write" element={<Write />} />
                 <Route path="/post/:postNum" element={<PostArea />} />
+                <Route path="/edit/:postNum" element={<Edit />} />
             </Routes>
         </Fragment>
     );

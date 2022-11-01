@@ -1,5 +1,35 @@
 import styled from "styled-components";
 
+// edit 
+const EditWrap = styled.div`
+    width: 1024px;
+    margin: 2rem auto;
+    border-radius: 10px;
+    background-color: #ffffff;
+    padding: 0.5rem 2rem;
+
+    @media (max-width: 1024px) {
+        width: 768px;
+    }
+
+    @media (max-width: 768px) {
+        width: 90%;
+        padding: 0.5rem;
+    }    
+`;
+
+// edit
+const ThumbnailText = styled.div`
+    font-size: 0.75rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-break: break-all;
+    font-weight: bold;
+    color: coral;
+`
+
+
 const QuillWrapper = styled.div`
     margin: 2rem 0;
     padding: 0;
@@ -32,6 +62,14 @@ const CategoryInput = styled.select`
     outline: none;
     border: none;
     border-bottom: 1px solid #ccc;
+    padding: 0.5rem;
+`;
+
+const ThumbnailInput = styled.input`
+    display: block;
+    width: 100%;
+    margin: 1rem 0;
+    border: 1px solid #ccc;
     padding: 0.5rem;
 `;
 
@@ -76,4 +114,4 @@ const CancelButton = styled.button`
     }
 `;
 
-export { QuillWrapper, TitleInput, CategoryInput, ButtonWrap, SubmitButton, CancelButton };
+export { ThumbnailText, ThumbnailInput, EditWrap, QuillWrapper, TitleInput, CategoryInput, ButtonWrap, SubmitButton, CancelButton };

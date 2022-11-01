@@ -1,14 +1,12 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react'
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useMemo, useRef, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import ReactQuill, { Quill } from 'react-quill';
 import "react-quill/dist/quill.snow.css";
 import hljs from 'highlight.js';
 import 'highlight.js/styles/github-dark.css';
 
-/* assets */
-import { ButtonWrap, CancelButton, CategoryInput, QuillWrapper, SubmitButton, ThumbnailInput, TitleInput } from '../assets/EditorStyle.js';
+import { ButtonWrap, CancelButton, CategoryInput, EditWrap, QuillWrapper, SubmitButton, ThumbnailInput, ThumbnailText, TitleInput } from '../assets/EditorStyle.js';
 
 import ImageResize from 'quill-image-resize';
 Quill.register('modules/ImageResize', ImageResize);
@@ -17,29 +15,43 @@ hljs.configure({
     languages: ['javascript', 'ruby', 'python', 'rust'],
 })
 
-function Editor() {
+function Edit() {
+
+    let params = useParams();
+    let navigate = useNavigate();
+    const quillRef = useRef();
 
     const [Title, setTitle] = useState("");
-    const [Category, setCategory] = useState("개발");
+    const [Category, setCategory] = useState("");
     const [CategoryList, setCategoryList] = useState([]);
     const [Content, setContent] = useState("");
 
     const [Thumbnail, setThumbnail] = useState("");
 
-    const navigate = useNavigate();
-
-    const quillRef = useRef();
-
-    const user = useSelector((state) => state.user);
-
+    // 글 정보 가져오기
     useEffect(() => {
-        if (!user._id) {
-            alert("로그인 한 회원만 글을 작성할 수 있습니다.");
-            navigate("/login");
-        }
-    }, [user])
 
-    // 카테고리 가져오기
+        let body = {
+            postNum: params.postNum
+        }
+
+        axios.post("/api/post/detail", body).then((res) => {
+
+            if (res.data.success) {
+
+                setTitle(res.data.postInfo.title);
+                setCategory(res.data.postInfo.category);
+                setContent(res.data.postInfo.content);
+                setThumbnail(res.data.postInfo.thumbnail);
+            }
+
+        }).catch((err) => {
+            console.log(err);
+        })
+
+    }, [params.postNum])
+
+    // 카테고리 리스트 가져오기
     const getCategoryList = () => {
 
         axios.post("/api/category/list").then((res) => {
@@ -58,7 +70,7 @@ function Editor() {
         getCategoryList();
     }, [])
 
-    // imageHandler
+    // Quill imageHandler
     const imageHandler = () => {
 
         const input = document.createElement("input");
@@ -140,16 +152,16 @@ function Editor() {
             title: Title,
             category: Category,
             content: Content,
-            userid: user.userid,
-            thumbnail: Thumbnail
+            thumbnail: Thumbnail,
+            postNum: params.postNum,
         }
 
-        axios.post("/api/post/submit", body).then((res) => {
+        axios.post("/api/post/edit", body).then((res) => {
             if (res.data.success) {
-                alert("글 작성 완료.");
-                window.location.href = "/";
+                alert("글 수정이 완료되었습니다.");
+                navigate(`/post/${params.postNum}`);
             } else {
-                alert("글 작성 실패.");
+                alert("글 수정 실패!");
             }
         }).catch((err) => {
             console.log(err);
@@ -157,9 +169,9 @@ function Editor() {
     }
 
     return (
-        <>
+        <EditWrap>
             <TitleInput placeholder='제목을 입력하세요..' value={Title} onChange={onChangeTitle} />
-            <CategoryInput onChange={onChangeCategory}>
+            <CategoryInput onChange={onChangeCategory} value={Category}>
                 {CategoryList.map((category, idx) => {
                     return (
                         <option key={idx} value={category.category}>{category.category}</option>
@@ -167,15 +179,18 @@ function Editor() {
                 })}
             </CategoryInput>
             <ThumbnailInput type="file" accept="image/*" onChange={(e) => FileUpload(e)}></ThumbnailInput>
+            {
+                Thumbnail ? <ThumbnailText>{Thumbnail}</ThumbnailText> : ""
+            }
             <QuillWrapper>
                 <ReactQuill ref={quillRef} modules={modules} theme="snow" value={Content} onChange={setContent}></ReactQuill>
             </QuillWrapper>
             <ButtonWrap>
-                <SubmitButton onClick={(e) => onSubmit(e)}>작성</SubmitButton>
+                <SubmitButton onClick={(e) => onSubmit(e)}>수정</SubmitButton>
                 <CancelButton onClick={() => { localStorage.setItem('category', ""); window.location.href = "/"; }}>취소</CancelButton>
             </ButtonWrap>
-        </>
+        </EditWrap>
     )
 }
 
-export default Editor
+export default Edit
