@@ -15,7 +15,7 @@ function loadUser() {
     try {
 
         const user = localStorage.getItem("user");
-        console.log(JSON.parse(user));
+        // console.log(JSON.parse(user));
 
         // 시작할때 로컬스토리지에 유저가 없다면 그냥 넘어간다.
         if (!user) {
@@ -32,7 +32,8 @@ function loadUser() {
 
                 // 토큰도 유효
                 if (res.data.success) {
-                    console.log(res.data.user);
+
+                    // console.log(res.data.user);
                     console.log(res.data.msg)
                 }
 
