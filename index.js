@@ -4,12 +4,12 @@ const helmet = require("helmet");
 const hpp = require("hpp");
 const path = require("path");
 
+const port = process.env.PORT || 5000
+
 var cookieParser = require("cookie-parser");
 
 /* config */
-require("dotenv").config();
-const PORT = process.env.PORT || 5000;
-const MONGO_URI = process.env.MONGO_URI;
+const config = require("./server/config/key.js");
 
 const app = express();
 
@@ -27,14 +27,14 @@ app.use("/api/category", require("./server/Router/category.js"));
 app.use("/api/post", require("./server/Router/post.js"));
 
 
-mongoose.connect(MONGO_URI).then(() => {
+mongoose.connect(config.MONGO_URI).then(() => {
     console.log("MongoDB connection Success!");
 }).catch((err) => {
     console.log(err);
 })
 
-app.listen(PORT, () => {
-    console.log(`App listening on Port ${PORT}`);
+app.listen(port, () => {
+    console.log(`App listening on Port ${port}`);
 })
 
 app.get("/", (req, res) => {

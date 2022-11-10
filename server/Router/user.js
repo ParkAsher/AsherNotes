@@ -3,6 +3,8 @@ var router = express.Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
+const config = require("../config/key.js");
+
 /* Model */
 const { User } = require("../Model/User");
 
@@ -90,7 +92,7 @@ router.post("/login", (req, res) => {
                     _id: findUser._id,
                     name: findUser.name,
                 },
-                process.env.JWT_SECRET,
+                config.JWT_SECRET,
                 { expiresIn: '1d' }
 
             );
