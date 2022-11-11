@@ -1,6 +1,5 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const helmet = require("helmet");
 const hpp = require("hpp");
 const path = require("path");
 
@@ -13,7 +12,6 @@ const config = require("./server/config/key.js");
 
 const app = express();
 
-app.use(helmet());
 app.use(hpp());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
