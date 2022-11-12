@@ -54,7 +54,9 @@ function Detail(props) {
                     </div>
                 </PostTitleWrap>
                 <PostContent>
-                    <div className='view ql-editor' dangerouslySetInnerHTML={{ __html: props.PostInfo.content }} />
+                    <div className='ql-snow'>
+                        <div className='view ql-editor' dangerouslySetInnerHTML={{ __html: props.PostInfo.content }} />
+                    </div>
                 </PostContent>
             </PostWrap>
             <PostBtnWrap>

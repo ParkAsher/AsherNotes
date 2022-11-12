@@ -95,12 +95,13 @@ function Editor() {
         toolbar: {
 
             container: [
-                [{ 'header': [false, 1, 2, 3, 4, 5] }],
-                ['bold', 'italic', 'underline', 'blockquote', 'code-block'],
-                [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                [{ 'font': [] }, { 'size': [] }],
+                [{ 'header': 1 }, { 'header': 2 }],
+                ['bold', 'italic', 'underline', 'strike', 'blockquote', 'code-block'],
+                [{ 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' },],
                 [{ 'color': [] }, { 'background': [] }],
                 [{ 'align': [] }],
-                ['image'],
+                ['link', 'image'],
             ],
             handlers: {
                 image: imageHandler,
